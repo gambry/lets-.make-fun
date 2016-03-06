@@ -1,0 +1,19 @@
+core: 7.x
+api: '2'
+defaults:
+  projects:
+    subdir: contrib
+projects:
+  openlayers:
+    subdir: contrib
+    type: module
+    version: 2.0-alpha2
+    patch:
+      - 'http://drupal.org/files/0001-Fix-the-path-file-declaration-for-behaviors.patch'
+  job_scheduler:
+    subdir: contrib
+    contrib_destination: sites/mysite.it
+  entityreference:
+    subdir: original
+    type: module
+    version: '1.1'

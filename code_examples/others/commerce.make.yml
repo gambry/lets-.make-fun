@@ -1,0 +1,8 @@
+api: 2
+core: 7.x
+projects:
+  drupal:
+    version: '7.41'
+  commerce_kickstart:
+    type: profile
+    version: '2.31'

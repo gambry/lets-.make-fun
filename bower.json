@@ -1,0 +1,17 @@
+{
+  "name": "manifesto-presentation",
+  "description": "It's Manifesto presentation framework based on impress.js",
+  "license" : ["http://www.gnu.org/licenses/"],
+  "version" : "1.0.0",
+  "author": {
+    "name": "Gabriele Maira"
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components"
+  ],
+  "dependencies": {
+    "impress.js": "c68fe624026e8dfdd84e94a6405325c4b3b64237"
+  }
+}
