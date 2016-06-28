@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1024" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <title>Let's .make fun | How to use drush .make file to maintain your codebase and avoid really strong headaches | by Gabriele Maira @gambry</title>
+
+    <meta name="description" content="How to use drush .make file to maintain your codebase and avoid really strong headaches" />
+    <meta name="author" content="Gabriele Maira" />
+
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:regular,semibold,italic,italicsemibold|PT+Sans:400,700,400italic,700italic|PT+Serif:400,700,400italic,700italic" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="asciinema-player/asciinema-player.css" />
+    <script src="asciinema-player/asciinema-player.js"></script>
+    <link href="bower_components/impress.js/css/impress-demo.css" rel="stylesheet" />
+    <link href="css/presentation.css" rel="stylesheet" />
+
+    <link rel="shortcut icon" href="favicon.png" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+</head>
+
+<body class="impress-not-supported">
+
+<div class="fallback-message">
+    <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
+    <p>For the best experience please use the latest <b>Chrome</b>, <b>Safari</b> or <b>Firefox</b> browser.</p>
+</div>
+
+<div id="impress">
+
+    <div id="slide-0" class="step slide slide--type-black" data-x="-1000" data-y="-1500">
+      <img src="images/logo.jpg" width="50%">
+      <img src="images/Manifesto-Logo_white.png" width="33%">
+      <h1>Let's .make fun</h1>
+      <h2>How to use drush .make file to maintain your codebase and avoid really strong headaches</h2>
+      <p class="centralize">DrupalCamp London 2016</p>
+    </div>
+
+
+    <div id="slide-1" class="step slide slide--type-default" data-x="200" data-y="-1500">
+      <h2>About me</h2>
+      <ul>
+        <li>Hi, I'm <b>gambry</b></li>
+        <li>I work at <b>Manifesto Digital</b></li>
+        <li>Things I love:
+          <ul>
+            <li>Drupal</li>
+            <li>PHP</li>
+            <li>Movies</li>
+            <li>Cooking</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <div id="commom-ways" class="step slide slide--type-red" data-x="1400" data-y="-1500">
+        <q>Common ways of setting up a Drupal project codebase</q>
+        <q>(hopefully not so common...)</q>
+    </div>
+
+    <div id="common-ways-1" class="step slide slide--type-default" data-x="750" data-y="-1500" data-scale="2" data-z="1500">
+        <h2>Manual Download from Drupal.org</h2>
+        <q><video width="100%" controls>
+          <source src="videos/Download%20Drupal%20from%20D.O.webm" type="video/webm">
+          Your browser does not support the video tag.
+        </video></q>
+    </div>
+    <div id="common-ways-2" class="step slide slide--type-default" data-x="500" data-y="-1000" data-scale="2" data-z="4000">
+      <h2>Clone Drupal GIT repo(s)</h2>
+      <code class="terminal">git clone http://git.drupal.org/project/drupal.git myproject</code>
+    </div>
+  <div id="common-ways-3" class="step slide slide--type-default" data-x="250" data-y="-500" data-scale="2" data-z="7000">
+    <h2>Use Drush</h2>
+    <code class="terminal">drush dl devel</code>
+    <div class="centralize"><img  src="images/could-be-worse.jpg"></div>
+  </div>
+  <div id="common-ways-4" class="step slide slide--type-default" data-x="0" data-y="0" data-scale="2" data-z="10000">
+    <h2>Other or Custom ways</h2>
+    <ul>
+      <li>Using tools<br>
+        [<b>composer</b>, <b>ansible</b>, <b>Makefile</b>]
+      </li>
+      <li>Scripting languages<br/>
+        [<b>perl</b>, <b>python</b>, <b>ruby</b>, <b>bash</b>]</li>
+      <li>Clone your own base repo <br/>
+        [<b>acquia approach</b>]</li>
+    </ul>
+  </div>
+  <div id="confused" class="step" data-x="750" data-y="-1300" data-rotate="90" data-z="10000" data-scale="1">
+    <h1 style="color:#fff;">Confused?</h1>
+
+  </div>
+  <div id="confused-me-too" class="step" data-x="-750" data-y="-1300" data-rotate="90" data-z="10000" data-scale="1">
+    <h1 style="color:#fff;">Me too!</h1>
+  </div>
+
+  <div id="drush-make" class="step slide slide--type-blue" data-x="-1000" data-y="-700">
+    <h1>Drush Make</h1>
+    <q>One tool to rule them all,<br/> One tool to find them,<br/>
+      One tool to bring them all<br> and in the project bind them</q>
+    <em>#TheCommandOfThePower</em>
+  </div>
+
+  <div id="drush-make-definition" class="step slide slide--type-default" data-x="200" data-y="-700">
+    <q>Drush extension able to create a ready-to-use drupal site, from a simple text file (.make) listing rules (source types, paths, destination names) and dependencies.</q>
+    <code class="terminal">drush make myfile.make my-docroot</code>
+  </div>
+
+  <div id="drush-make-description" class="step slide slide--type-default" data-x="1400" data-y="-700">
+    <h3>What drush make IS</h3>
+    <ul>
+      <li>Downloads projects and libraries</li>
+      <li>Organises downloaded files</li>
+      <li>Patches projects and libraries</li>
+    </ul>
+    <h3>What drush make IS NOT</h3>
+    <ul class="with-red-bold">
+      <li>Doesn't install your website <br/>[<b>but can prepare the codebase for installation</b>]*</li>
+      <li>Doesn't know about (multi-)sites on your website <br/>[<b>but you do!</b>]*</li>
+      <li>Doesn't take care of projects dependencies <br/>[<b>by itself</b>]*</li>
+      <li>Doesn't run pre/post execution scripts</li>
+    </ul>
+    <em>*will see how later on...</em>
+  </div>
+
+  <div id="drush-make-file" class="step slide slide--type-red" data-x="-1000" data-y="700">
+    <h1>The .make file</h1>
+  </div>
+  <div id="drush-make-file-syntax" class="step slide slide--type-default" data-x="200" data-y="700">
+    <h1>File and Syntax</h1>
+    <ul>
+      <li>Plain text file</li>
+      <li>Manually created or through <code class="terminal">drush make-generate my-drupal-website.make</code></li>
+      <li>YAML or .info INI syntax</li>
+      <li>Convert the syntax with <code class="terminal">drush make-convert my-existing-file.make</code></li>
+    </ul>
+  </div>
+  <div id="drush-make-projects" class="step slide slide--type-default" data-x="1400" data-y="700">
+    <h2>Projects & Libraries</h2>
+    <div id="drush-make-projects_player-container"></div>
+    <script>asciinema_player.core.CreatePlayer('drush-make-projects_player-container', 'videos/asciinema/projects_and_libraries.json', { width: 99, height: 25, fontSize: 'medium', theme: 'solarized-light'});</script>
+  </div>
+  <div id="drush-make-recursions" class="step slide slide--type-default" data-x="2600" data-y="700">
+    <h2>Recursions</h2>
+    <div id="drush-make-recursions_player-container"></div>
+    <script>asciinema_player.core.CreatePlayer('drush-make-recursions_player-container', 'videos/asciinema/recursions.json', { width: 80, height: 14, fontSize: 'big', theme: 'solarized-light'});</script>
+  </div>
+  <div id="drush-make-includes-overrides" class="step slide slide--type-default" data-x="3800" data-y="700">
+    <h2>Includes & Overrides</h2>
+    <div id="drush-make-includes-overrides_player-container"></div>
+    <script>asciinema_player.core.CreatePlayer('drush-make-includes-overrides_player-container', 'videos/asciinema/includes_overrides.json', { width: 80, height: 14, fontSize: 'big', theme: 'solarized-light'});</script>
+  </div>
+  <div id="painless-patching" class="step slide slide--type-blue" data-x="-1000" data-y="2000">
+    <h1>Painless Patching</h1>
+    <img src="images/patching.gif">
+  </div>
+  <div id="painless-patching-0" class="step slide slide--type-default" data-x="200" data-y="2000">
+    <h2>Patching from your .make file</h2>
+    <div id="drush-make-painless-patching-0_player-container"></div>
+    <script>asciinema_player.core.CreatePlayer('drush-make-painless-patching-0_player-container', 'videos/asciinema/patching.json', { width: 99, height: 20, fontSize: 'medium', theme: 'solarized-light'});</script>
+  </div>
+  <div id="painless-patching-1.0" class="step slide slide--type-default" data-x="1400" data-y="2000">
+    <ul>
+      <li>Define patch conditions</li>
+    </ul>
+  </div>
+  <div id="painless-patching-1.1" class="step slide slide--type-default" data-x="1400" data-y="2000">
+    <ul>
+      <li>Define patch conditions</li>
+      <li>Define patch source</li>
+    </ul>
+  </div>
+  <div id="painless-patching-1.2" class="step slide slide--type-default" data-x="1400" data-y="2000">
+    <ul>
+      <li>Define patch conditions</li>
+      <li>Define patch source</li>
+      <li>Apply patch easily</li>
+    </ul>
+  </div>
+  <div id="painless-patching-1.3" class="step slide slide--type-default" data-x="1400" data-y="2000">
+    <ul>
+      <li>Define patch conditions</li>
+      <li>Define patch source</li>
+      <li>Apply patch easily</li>
+      <li>Keep track of ALL your patches easily</li>
+    </ul>
+  </div>
+  <div id="painless-patching-1.4" class="step slide slide--type-default" data-x="1400" data-y="2000">
+    <ul>
+      <li>Define patch conditions</li>
+      <li>Define patch source</li>
+      <li>Apply patch easily</li>
+      <li>Keep track of ALL your patches easily</li>
+      <li>Document patches easily</li>
+    </ul>
+  </div>
+  <div id="painless-patching-1.5" class="step slide slide--type-default" data-x="1400" data-y="2000">
+    <ul>
+      <li>Define patch conditions</li>
+      <li>Define patch source</li>
+      <li>Apply patch easily</li>
+      <li>Keep track of ALL your patches easily</li>
+      <li>Document patches easily</li>
+    </ul>
+    <p>&nbsp;</p>
+    <h2 class="centralize">You have the control of the workflow and the system</h2>
+  </div>
+  <div id="painless-patching-1.6" class="step slide slide--type-default" data-x="1400" data-y="2000">
+    <ul>
+      <li>Define patch conditions</li>
+      <li>Define patch source</li>
+      <li>Apply patch easily</li>
+      <li>Keep track of ALL your patches easily</li>
+      <li>Document patches easily</li>
+    </ul>
+    <p>&nbsp;</p>
+    <h2 class="centralize">You have the control of the workflow and the system</h2>
+    <h2 class="centralize">and NOT the other way round!!!</h2>
+  </div>
+
+  <div id="tips-and-tricks" class="step slide slide--type-red" data-x="-1000" data-y="3300">
+    <h1>Tips and Tricks</h1>
+    <h2>Everyday examples, suggestions, ideas</h2>
+  </div>
+  <div id="tips-and-tricks-1" class="step slide slide--type-default" data-x="200" data-y="3300">
+    <h1>.make your workflow</h1>
+    <q class="centralize">base.make<br/>prod.make<br/>test.make<br/>dev.make</q>
+  </div>
+  <div id="tips-and-tricks-1.1" class="step slide slide--type-default" data-x="200" data-y="3300">
+    <h1>.make your workflow (2)</h1>
+    <code>.gitignore:
+
+!docroot/sites
+docroot/sites/*
+!docroot/sites/all
+docroot/sites/all/*
+!docroot/sites/all/modules
+docroot/sites/all/modules/*
+!docroot/sites/all/modules/custom
+!docroot/sites/all/modules/feature</code>
+  </div>
+  <div id="tips-and-tricks-2" class="step slide slide--type-default" data-x="1400" data-y="3300">
+    <h1>Controlling recursion</h1>
+    <h3 class="centralize">do_recursion: 0<br/><br/>--no-recursion</h3>
+  </div>
+  <div id="tips-and-tricks-3" class="step slide slide--type-default" data-x="2600" data-y="3300">
+    <h1>Multisites</h1>
+    <h3 class="centralize">contrib_destination: "sites/site2.co.uk"</h3>
+  </div>
+  <div id="tips-and-tricks-4" class="step slide slide--type-default" data-x="3800" data-y="3300">
+    <h1>Patching issue</h1>
+    <h3 class="centralize">type = git</h3>
+  </div>
+  <div id="tips-and-tricks-5" class="step slide slide--type-default" data-x="5000" data-y="3300">
+    <h1>Custom .htaccess?</h1>
+    <h3 class="centralize">Patch the core!</h3>
+  </div>
+
+  <div id="thank-you" class="step slide slide--type-black" data-x="-1000" data-y="4600">
+    <q>Thank you!</q>
+    <img src="images/logo.jpg" width="50%" /><img src="images/Manifesto-Logo_white.png" height="25%" />
+    <p>@gambry</p>
+    <p>@DrupalCampLDN</p>
+    <p>#TheCommandOfThePower</p>
+  </div>
+
+  <div id="questions" class="step slide slide--type-black" data-x="200" data-y="4600">
+    <q>Questions or Lunch???</q>
+    <img src="images/logo.jpg" width="50%"><img src="images/Manifesto-Logo_white.png" height="25%" />
+    <p>@gambry</p>
+    <p>@DrupalCampLDN</p>
+    <p>#TheCommandOfThePower</p>
+  </div>
+
+
+    <div id="overview" class="step" data-x="3000" data-y="1500" data-scale="10">
+    </div>
+
+</div>
+
+<div class="hint">
+    <p>Use a spacebar or arrow keys to navigate</p>
+</div>
+<script>
+if ("ontouchstart" in document.documentElement) {
+    document.querySelector(".hint").innerHTML = "<p>Tap on the left or right to navigate</p>";
+}
+</script>
+
+<script src="bower_components/impress.js/js/impress.js"></script>
+<script>impress().init();</script>
+
+
+</body>
+</html>
+
+
